@@ -1,0 +1,27 @@
+{
+  "name": "curso-node",
+  "version": "0.1.0",
+  "description": "Curso de node.js",
+  "main": "src/index.js",
+  "scripts": {
+    "service": "node -r dotenv/config src/index.js",
+    "express": "nodemon -r dotenv/config src/expressExample/index.js",
+    "http": "nodemon -r dotenv/config src/httpExample/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^16.0.1",
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.24.28",
+    "ajv": "^8.11.0",
+    "ajv-formats": "^2.1.1",
+    "express": "^4.18.1",
+    "http-errors": "^2.0.0",
+    "mongoose": "^6.5.2",
+    "morgan": "^1.10.0",
+    "nanoid": "^3.3.4"
+  }
+}
