@@ -2,14 +2,12 @@ const { Router } = require('express')
 const { nanoid } = require('nanoid')
 
 const {
-  article: {
-    storeArticleSchema,
-    updateArticleSchema,
-    articleIDSchema
-  }
+  article: { storeArticleSchema, updateArticleSchema, articleIDSchema }
 } = require('../../schemas')
 const { validatorCompiler } = require('./utils')
-const { mongo: { queries } } = require('../../database')
+const {
+  mongo: { queries }
+} = require('../../database')
 const response = require('./response')
 
 const ArticleRouter = Router()
@@ -37,7 +35,9 @@ ArticleRouter.route('/article')
     validatorCompiler(storeArticleSchema, 'body'),
     async (req, res, next) => {
       try {
-        const { body: { name, price, image, description } } = req
+        const {
+          body: { name, price, image, description }
+        } = req
 
         await saveArticle({
           id: nanoid(),
@@ -46,7 +46,12 @@ ArticleRouter.route('/article')
           image,
           description
         })
-        response({ error: false, message: await getAllArticles(), res, status: 201 })
+        response({
+          error: false,
+          message: await getAllArticles(),
+          res,
+          status: 201
+        })
       } catch (error) {
         next(error)
       }
@@ -54,27 +59,33 @@ ArticleRouter.route('/article')
   )
 
 ArticleRouter.route('/article/:id')
-  .get(
-    validatorCompiler(articleIDSchema, 'params'),
-    async (req, res, next) => {
-      try {
-        const { params: { id } } = req
-        const article = await getOneArticle(id)
+  .get(validatorCompiler(articleIDSchema, 'params'), async (req, res, next) => {
+    try {
+      const {
+        params: { id }
+      } = req
+      const article = await getOneArticle(id)
 
-        response({ error: false, message: article, res, status: 200 })
-      } catch (error) {
-        next(error)
-      }
+      response({ error: false, message: article, res, status: 200 })
+    } catch (error) {
+      next(error)
     }
-  )
+  })
   .delete(
     validatorCompiler(articleIDSchema, 'params'),
     async (req, res, next) => {
       try {
-        const { params: { id } } = req
+        const {
+          params: { id }
+        } = req
 
         await removeOneArticle(id)
-        response({ error: false, message: await getAllArticles(), res, status: 200 })
+        response({
+          error: false,
+          message: await getAllArticles(),
+          res,
+          status: 200
+        })
       } catch (error) {
         next(error)
       }
@@ -85,13 +96,18 @@ ArticleRouter.route('/article/:id')
     validatorCompiler(updateArticleSchema, 'body'),
     async (req, res, next) => {
       const {
-        body: { name, price, image, description},
+        body: { name, price, image, description },
         params: { id }
       } = req
 
       try {
         await updateOneArticle({ id, name, price, image, description })
-        response({ error: false, message: await getAllArticles(), res, status: 200 })
+        response({
+          error: false,
+          message: await getAllArticles(),
+          res,
+          status: 200
+        })
       } catch (error) {
         next(error)
       }

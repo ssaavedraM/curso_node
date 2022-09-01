@@ -6,6 +6,9 @@ const { UserModel } = require('../models')
  * @param {String} user.name
  * @param {String} user.lastName
  * @param {String} user.email
+ * @param {String} user.salt
+ * @param {String} user.hash
+ * @param {import('mongoose').Schema.Types.ObjectId} user.role
  * @returns saved user
  */
 const saveUser = async user => {
@@ -20,7 +23,7 @@ const saveUser = async user => {
  * @param {String} id
  * @returns found user
  */
-const getOneUser = async id => {
+const getUserByID = async id => {
   const users = await UserModel.find({ id })
 
   return users[0]
@@ -30,7 +33,7 @@ const getOneUser = async id => {
  * @returns found users
  */
 const getAllUsers = async () => {
-  const users = await UserModel.find()
+  const users = await UserModel.find().populate('role')
 
   return users
 }
@@ -39,8 +42,8 @@ const getAllUsers = async () => {
  * @param {String} id
  * @returns found user
  */
-const removeOneUser = async id => {
-  const user = await UserModel.findOneAndRemove({ id })
+const removeUserByID = async id => {
+  const user = await UserModel.findOneAndRemove({ id }).populate('role')
 
   return user
 }
@@ -51,23 +54,42 @@ const removeOneUser = async id => {
  * @param {String|undefined} user.name
  * @param {String|undefined} user.lastName
  * @param {String|undefined} user.email
+ * @param {String|undefined} user.salt
+ * @param {String|undefined} user.hash
  * @returns updated user
  */
 const updateOneUser = async user => {
-  const { id, name, lastName, email } = user
+  const { id, name, lastName, email, salt, hash } = user
   const userUpdated = await UserModel.findOneAndUpdate(
     { id },
-    { name, lastName, email },
+    {
+      ...(name && { name }),
+      ...(lastName && { lastName }),
+      ...(email && { email }),
+      ...(salt && hash && { salt, hash })
+    },
     { new: true }
   )
 
   return userUpdated
 }
 
+/**
+ *
+ * @param {Object} query
+ * @returns
+ */
+const getUserByPassword = async (query = {}) => {
+  const users = await UserModel.find(query)
+
+  return users[0]
+}
+
 module.exports = {
   saveUser,
-  getOneUser,
+  getUserByID,
   getAllUsers,
-  removeOneUser,
-  updateOneUser
+  removeUserByID,
+  updateOneUser,
+  getUserByPassword
 }

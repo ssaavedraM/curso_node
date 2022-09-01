@@ -1,5 +1,6 @@
 module.exports = {
   UrlModel: require('./url'),
   UserModel: require('./user'),
-  ArticleModel: require('./article')
+  ArticleModel: require('./article'),
+  RoleModel: require('./role')
 }

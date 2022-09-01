@@ -8,10 +8,10 @@ const storeArticleSchema = Type.Object({
 })
 
 const updateArticleSchema = Type.Object({
-    name: Type.Optional(Type.String({ minLength: 4 })),
-    price: Type.Optional(Type.Number()),
-    description: Type.Optional(Type.String({ minLength: 10 })),
-    image: Type.Optional(Type.String({ minLength: 10 }))
+  name: Type.Optional(Type.String({ minLength: 4 })),
+  price: Type.Optional(Type.Number()),
+  description: Type.Optional(Type.String({ minLength: 10 })),
+  image: Type.Optional(Type.String({ minLength: 10 }))
 })
 
 const articleIDSchema = Type.Object({

@@ -1,7 +1,9 @@
 const express = require('express')
 const morgan = require('morgan')
 
-const { mongo: { dbConnection } } = require('../database')
+const {
+  mongo: { dbConnection }
+} = require('../database')
 const applyRoutes = require('./router')
 
 const PORT = process.env.PORT

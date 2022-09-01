@@ -18,6 +18,19 @@ const UserSchema = new Schema(
     email: {
       required: true,
       type: String
+    },
+    salt: {
+      required: true,
+      type: String
+    },
+    hash: {
+      required: true,
+      type: String
+    },
+    role: {
+      required: true,
+      type: Schema.Types.ObjectId,
+      ref: 'roles'
     }
   },
   {
