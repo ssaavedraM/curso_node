@@ -1,3 +1,4 @@
 module.exports = {
-  validatorCompiler: require('./validatorCompiler')
+  validatorCompiler: require('./validatorCompiler'),
+  tokenValidator: require('./tokenValidator')
 }
